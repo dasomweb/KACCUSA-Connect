@@ -1,0 +1,46 @@
+{
+  "$schema": "https://dw-studio.io/schemas/design-tokens/palette-map.schema.json",
+  "description": "Maps semantic color names to Kadence theme palette slots. Colors are controlled entirely by Kadence Customizer > Colors. This file only defines WHICH palette slot to use WHERE.",
+
+  "kadence_palette": {
+    "palette1": "Brand Primary",
+    "palette2": "Brand Secondary",
+    "palette3": "Brand Accent",
+    "palette4": "Text Secondary",
+    "palette5": "Surface / Light BG",
+    "palette6": "Border",
+    "palette7": "Background / White",
+    "palette8": "Text Primary",
+    "palette9": "Success"
+  },
+
+  "semantic": {
+    "text-primary":    "palette8",
+    "text-secondary":  "palette4",
+    "text-inverse":    "palette7",
+    "bg-primary":      "palette7",
+    "bg-surface":      "palette5",
+    "bg-dark":         "palette1",
+    "bg-accent":       "palette3",
+    "brand-primary":   "palette1",
+    "brand-secondary": "palette2",
+    "brand-accent":    "palette3",
+    "border":          "palette6",
+    "success":         "palette9",
+    "btn-primary-bg":  "palette1",
+    "btn-primary-text":"palette7",
+    "btn-secondary-bg":"palette7",
+    "btn-secondary-text":"palette1"
+  },
+
+  "section_backgrounds": {
+    "white":  { "bg": "palette7", "text": "palette8" },
+    "light":  { "bg": "palette5", "text": "palette8" },
+    "dark":   { "bg": "palette1", "text": "palette7" },
+    "accent": { "bg": "palette3", "text": "palette7" },
+    "brand":  { "bg": "palette2", "text": "palette7" }
+  },
+
+  "css_var_format": "var(--global-palette{N})",
+  "note": "In Kadence Blocks, use 'palette1' through 'palette9' for color attributes. Kadence auto-resolves to var(--global-palette1) etc. Never use hex values directly in block attrs."
+}

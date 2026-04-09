@@ -70,9 +70,22 @@ Example:
 - Use numbers only without px (Kadence convention)
 Example: "borderRadius": 12  -> CORRECT / "borderRadius": "12px"  -> FORBIDDEN
 
+### Colors - Kadence Palette ONLY (Critical)
+- NEVER use hex color values in block templates or rendered markup
+- ALL colors must reference Kadence theme palette: palette1 through palette9
+- Palette mapping is defined in design-tokens/palette-map.json
+- Color changes are made ONLY in Kadence Customizer > Colors
+- Font family is NEVER set in blocks - theme typography controls all fonts
+
+Palette slots:
+- palette1: Brand Primary | palette2: Brand Secondary | palette3: Brand Accent
+- palette4: Text Secondary | palette5: Surface BG | palette6: Border
+- palette7: White/Background | palette8: Text Primary | palette9: Success
+
 ### Backgrounds
 - Reference design-tokens/backgrounds.json patterns
-- When background is dark/image-dark, ALL inner text must use textColor: "#FFFFFF"
+- Section backgrounds use palette-map.json section_backgrounds
+- When background is dark, ALL inner text must use palette7 (white)
 - Page background order follows backgrounds.json page-presets
 
 ### New Section Checklist

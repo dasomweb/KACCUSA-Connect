@@ -24,6 +24,7 @@ define( 'DW_CORE_URL', plugin_dir_url( __FILE__ ) );
  */
 require_once DW_CORE_PATH . 'includes/class-design-tokens.php';
 require_once DW_CORE_PATH . 'includes/class-template-renderer.php';
+require_once DW_CORE_PATH . 'includes/class-block-renderer.php';
 
 /**
  * Initialize core systems
@@ -32,6 +33,14 @@ add_action( 'plugins_loaded', function () {
 	DW_Design_Tokens::instance();
 	DW_Template_Renderer::instance();
 } );
+
+/**
+ * Register WP-CLI commands
+ */
+if ( defined( 'WP_CLI' ) && WP_CLI ) {
+	require_once DW_CORE_PATH . 'includes/class-cli-commands.php';
+	WP_CLI::add_command( 'dw', 'DW_CLI_Commands' );
+}
 
 /**
  * Flush design token cache when tokens are synced via WP-CLI
