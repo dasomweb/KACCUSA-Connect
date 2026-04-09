@@ -1,0 +1,152 @@
+name: Deploy to Production
+
+on:
+  push:
+    branches: [main]
+    paths-ignore:
+      - '*.md'
+      - 'TASK_LOG.md'
+
+env:
+  WP_PATH: ~/public_html
+  PROJECT_PATH: ~/public_html
+  BACKUP_PATH: ~/backups
+
+jobs:
+  # -- Stage 1: Validation --
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Full pre-deploy validation
+        run: |
+          # JSON validity
+          node scripts/validate-json.js
+
+          # PHP syntax
+          find includes/ plugins/ scripts/ templates/ -name "*.php" | while read f; do
+            php -l "$f" > /dev/null && echo "OK: $f" || (echo "FAIL: $f" && exit 1)
+          done
+
+          # Required files
+          for f in \
+            design-tokens/colors.json \
+            design-tokens/typography.json \
+            design-tokens/spacing.json \
+            scripts/sync-theme-options.php \
+            scripts/import-block-templates.php; do
+            test -f "$f" && echo "EXISTS: $f" || (echo "MISSING: $f" && exit 1)
+          done
+
+  # -- Stage 2: Production Deploy --
+  deploy:
+    needs: validate
+    runs-on: ubuntu-latest
+    environment: production
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Deploy to Production
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 18765 }}
+          script: |
+            set -e
+            TIMESTAMP=$(date +%Y%m%d%H%M%S)
+
+            echo "-- [1/7] Pre-deploy DB backup --"
+            mkdir -p ${{ env.BACKUP_PATH }}
+            wp db export ${{ env.BACKUP_PATH }}/pre-deploy-${TIMESTAMP}.sql \
+              --path=${{ env.WP_PATH }}
+            echo "DB backup: pre-deploy-${TIMESTAMP}.sql"
+
+            echo "-- [2/7] Pull latest code --"
+            cd ${{ env.PROJECT_PATH }}
+            git fetch origin main
+            git reset --hard origin/main
+
+            echo "-- [3/7] Sync design tokens to Kadence DB --"
+            wp eval-file scripts/sync-theme-options.php \
+              --path=${{ env.WP_PATH }}
+
+            echo "-- [4/7] Import block templates --"
+            wp eval-file scripts/import-block-templates.php \
+              --path=${{ env.WP_PATH }}
+
+            echo "-- [5/7] Flush rewrite rules --"
+            wp rewrite flush --path=${{ env.WP_PATH }}
+
+            echo "-- [6/7] Clear WordPress cache --"
+            wp cache flush --path=${{ env.WP_PATH }}
+
+            echo "-- [7/7] Verify plugin active --"
+            wp plugin status dw-core --path=${{ env.WP_PATH }}
+
+      - name: Post-deploy health checks
+        run: |
+          BASE="${{ secrets.PROD_URL }}"
+          CHECKS=(
+            "/"
+            "/wp-json/dw/v1/health"
+            "/wp-json/dw/v1/community/status"
+          )
+          ALL_PASS=true
+          for EP in "${CHECKS[@]}"; do
+            STATUS=$(curl -s -o /dev/null -w "%{http_code}" "$BASE$EP")
+            if [ "$STATUS" = "200" ]; then
+              echo "OK: $EP -> $STATUS"
+            else
+              echo "FAIL: $EP -> $STATUS"
+              ALL_PASS=false
+            fi
+          done
+          $ALL_PASS || exit 1
+
+      - name: Rollback on failure
+        if: failure()
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.PROD_HOST }}
+          username: ${{ secrets.PROD_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 18765 }}
+          script: |
+            echo "Rolling back to previous commit..."
+            cd ${{ env.PROJECT_PATH }}
+            git reset --hard HEAD~1
+            wp cache flush --path=${{ env.WP_PATH }}
+            echo "Rollback complete"
+
+      - name: Notify success
+        if: success() && vars.SLACK_ENABLED == 'true'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          text: |
+            Production deploy complete
+            Commit: `${{ github.sha }}`
+            URL: ${{ secrets.PROD_URL }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Notify failure
+        if: failure() && vars.SLACK_ENABLED == 'true'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: |
+            Production deploy FAILED - auto rollback executed
+            Commit: `${{ github.sha }}`
+            Immediate investigation required.
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

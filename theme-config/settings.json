@@ -1,0 +1,33 @@
+{
+  "theme": "kadence-pro",
+  "version": "1.0.0",
+  "global": {
+    "colors": {
+      "palette_source": "../design-tokens/colors.json",
+      "sync_method": "wp-cli",
+      "sync_script": "../scripts/sync-theme-options.php"
+    },
+    "typography": {
+      "source": "../design-tokens/typography.json"
+    },
+    "layout": {
+      "content_width": "1200px",
+      "narrow_width": "768px",
+      "wide_width": "1400px"
+    }
+  },
+  "pages": {
+    "home": {
+      "template": "page-home",
+      "layout_ref": "../block-templates/pages/home.json"
+    },
+    "portfolio": {
+      "template": "page-portfolio",
+      "layout_ref": "../block-templates/pages/portfolio.json"
+    },
+    "community": {
+      "template": "page-community",
+      "layout_ref": "../block-templates/pages/community.json"
+    }
+  }
+}

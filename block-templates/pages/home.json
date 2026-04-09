@@ -1,0 +1,9 @@
+{
+  "page": "home",
+  "template": "page-home",
+  "sections": [
+    { "ref": "sections/hero-section.json", "order": 1 },
+    { "ref": "sections/feature-grid.json", "order": 2 },
+    { "ref": "sections/cta-section.json", "order": 3 }
+  ]
+}

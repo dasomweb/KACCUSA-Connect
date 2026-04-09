@@ -1,0 +1,45 @@
+{
+  "template_name": "portfolio-card-v1",
+  "version": "1.0",
+  "description": "Query Loop card design for portfolio items - references component tokens",
+  "card_design": {
+    "wrapper": {
+      "background": "var(--dw-color-ui-background)",
+      "border": "var(--dw-color-ui-border)",
+      "borderRadius": "12px",
+      "shadow": "0 4px 16px rgba(0,0,0,0.08)",
+      "overflow": "hidden"
+    },
+    "thumbnail": {
+      "aspectRatio": "16/9",
+      "objectFit": "cover"
+    },
+    "content": {
+      "padding": "24px"
+    },
+    "title": {
+      "tag": "h3",
+      "color": "var(--dw-color-text-primary)",
+      "fontSize": "20px",
+      "fontWeight": 700,
+      "marginBottom": "8px"
+    },
+    "meta": {
+      "field": "_dw_client",
+      "color": "var(--dw-color-text-secondary)",
+      "fontSize": "14px",
+      "marginBottom": "16px"
+    },
+    "link_button": {
+      "text": "View Project",
+      "color": "var(--dw-color-brand-accent)",
+      "fontSize": "14px",
+      "fontWeight": 500
+    }
+  },
+  "hover": {
+    "shadow": "0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05)",
+    "transform": "translateY(-2px)",
+    "transition": "all 0.2s ease"
+  }
+}

@@ -1,0 +1,41 @@
+{
+  "footer": {
+    "background": "var(--dw-color-brand-primary)",
+    "text_color": "var(--dw-color-text-tertiary)",
+    "heading_color": "var(--dw-color-text-inverse)",
+    "border_top": "var(--dw-color-brand-primary-light)",
+    "padding_y": "48px",
+    "layout": {
+      "columns": 4,
+      "column_layout": "equal",
+      "sections": [
+        {
+          "title": "KACCUSA",
+          "type": "about",
+          "content": "Korean American Chamber of Commerce USA - Connecting Korean American businesses."
+        },
+        {
+          "title": "Quick Links",
+          "type": "menu",
+          "menu_slug": "footer-quick-links"
+        },
+        {
+          "title": "Resources",
+          "type": "menu",
+          "menu_slug": "footer-resources"
+        },
+        {
+          "title": "Contact",
+          "type": "contact-info",
+          "fields": ["address", "phone", "email"]
+        }
+      ]
+    },
+    "bottom_bar": {
+      "background": "var(--dw-color-brand-primary-dark)",
+      "padding_y": "16px",
+      "left": "copyright",
+      "right": "social-icons"
+    }
+  }
+}

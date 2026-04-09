@@ -1,0 +1,15 @@
+{
+  "page": "portfolio",
+  "template": "page-portfolio",
+  "sections": [
+    { "ref": "sections/hero-section.json", "order": 1 },
+    {
+      "type": "query-loop",
+      "order": 2,
+      "card_ref": "sections/portfolio-card.json",
+      "post_type": "dw_portfolio",
+      "note": "posts_per_page, category filter, and sort order are managed in WP Admin"
+    },
+    { "ref": "sections/cta-section.json", "order": 3 }
+  ]
+}

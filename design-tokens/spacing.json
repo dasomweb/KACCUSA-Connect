@@ -1,0 +1,38 @@
+{
+  "$schema": "https://dw-studio.io/schemas/design-tokens/spacing.schema.json",
+  "tokens": {
+    "0": "0px",
+    "1": "4px",
+    "2": "8px",
+    "3": "12px",
+    "4": "16px",
+    "5": "20px",
+    "6": "24px",
+    "8": "32px",
+    "10": "40px",
+    "12": "48px",
+    "16": "64px",
+    "20": "80px",
+    "24": "96px",
+    "32": "128px"
+  },
+  "layout": {
+    "content-max-width": "1200px",
+    "narrow-width": "768px",
+    "wide-width": "1400px",
+    "full-width": "100%",
+    "section-padding-y": "80px",
+    "section-padding-x": "24px",
+    "container-padding": "20px",
+    "grid-gap": "24px",
+    "grid-gap-sm": "16px"
+  },
+  "breakpoints": {
+    "xs": "375px",
+    "sm": "576px",
+    "md": "768px",
+    "lg": "1024px",
+    "xl": "1280px",
+    "2xl": "1536px"
+  }
+}

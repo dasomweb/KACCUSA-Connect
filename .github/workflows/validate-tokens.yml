@@ -1,0 +1,37 @@
+name: Validate Design Tokens
+
+on:
+  pull_request:
+    paths:
+      - 'design-tokens/**'
+      - 'theme-config/**'
+      - 'block-templates/**'
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate all JSON files
+        run: node scripts/validate-json.js
+
+      - name: Check PHP syntax
+        run: |
+          find includes/ plugins/ scripts/ templates/ -name "*.php" | while read f; do
+            php -l "$f" > /dev/null && echo "OK: $f" || (echo "FAIL: $f" && exit 1)
+          done
+
+      - name: Post validation summary to PR
+        if: always()
+        uses: marocchino/sticky-pull-request-comment@v2
+        with:
+          message: |
+            ## Design Token Validation
+            ${{ job.status == 'success' && 'All token and syntax checks passed' || 'Validation failed - check logs' }}

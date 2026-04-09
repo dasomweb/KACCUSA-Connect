@@ -1,0 +1,111 @@
+name: Deploy to Staging
+
+on:
+  push:
+    branches: [develop]
+
+env:
+  WP_PATH: ~/public_html
+  PROJECT_PATH: ~/public_html
+
+jobs:
+  deploy-staging:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Pre-flight JSON validation
+        run: node scripts/validate-json.js
+
+      - name: Deploy files to staging
+        uses: appleboy/ssh-action@v1
+        with:
+          host: ${{ secrets.STAGING_HOST }}
+          username: ${{ secrets.STAGING_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: ${{ secrets.SSH_PORT || 18765 }}
+          script: |
+            set -e
+
+            echo "-- [1/6] Pull latest code --"
+            cd ${{ env.PROJECT_PATH }}
+            git fetch origin develop
+            git reset --hard origin/develop
+
+            echo "-- [2/6] Sync design tokens to Kadence DB --"
+            wp eval-file scripts/sync-theme-options.php \
+              --path=${{ env.WP_PATH }}
+
+            echo "-- [3/6] Import block templates --"
+            wp eval-file scripts/import-block-templates.php \
+              --path=${{ env.WP_PATH }}
+
+            echo "-- [4/6] Flush rewrite rules --"
+            wp rewrite flush --path=${{ env.WP_PATH }}
+
+            echo "-- [5/6] Clear object cache --"
+            wp cache flush --path=${{ env.WP_PATH }}
+
+            echo "-- [6/6] Verify plugin status --"
+            wp plugin status dw-core --path=${{ env.WP_PATH }}
+
+      - name: Health check - main endpoint
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.STAGING_URL }}/wp-json/dw/v1/health")
+          if [ "$STATUS" != "200" ]; then
+            echo "Health check failed: HTTP $STATUS"
+            exit 1
+          fi
+          echo "GPS auth endpoint responding: HTTP $STATUS"
+
+      - name: Health check - community endpoint
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.STAGING_URL }}/wp-json/dw/v1/community/status")
+          if [ "$STATUS" != "200" ]; then
+            echo "Community endpoint failed: HTTP $STATUS"
+            exit 1
+          fi
+          echo "Community endpoint responding: HTTP $STATUS"
+
+      - name: Health check - homepage render
+        run: |
+          STATUS=$(curl -s -o /dev/null -w "%{http_code}" \
+            "${{ secrets.STAGING_URL }}/")
+          if [ "$STATUS" != "200" ]; then
+            echo "Homepage returned HTTP $STATUS"
+            exit 1
+          fi
+          echo "Homepage rendering OK: HTTP $STATUS"
+
+      - name: Notify on success
+        if: success() && vars.SLACK_ENABLED == 'true'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: success
+          text: |
+            Staging deploy complete
+            Branch: `develop` | Commit: `${{ github.sha }}`
+            URL: ${{ secrets.STAGING_URL }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}
+
+      - name: Notify on failure
+        if: failure() && vars.SLACK_ENABLED == 'true'
+        uses: 8398a7/action-slack@v3
+        with:
+          status: failure
+          text: |
+            Staging deploy failed
+            Branch: `develop` | Commit: `${{ github.sha }}`
+            Check Actions logs.
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK }}

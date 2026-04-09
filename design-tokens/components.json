@@ -1,0 +1,78 @@
+{
+  "$schema": "https://dw-studio.io/schemas/design-tokens/components.schema.json",
+  "button": {
+    "primary": {
+      "bg": "#1A1A2E",
+      "bg-hover": "#2E2E4E",
+      "text": "#FFFFFF",
+      "border": "transparent",
+      "radius": "6px",
+      "padding": "12px 24px",
+      "font-weight": 700,
+      "font-size": "15px"
+    },
+    "secondary": {
+      "bg": "transparent",
+      "bg-hover": "#F8F9FA",
+      "text": "#1A1A2E",
+      "border": "#E5E7EB",
+      "radius": "6px",
+      "padding": "12px 24px"
+    },
+    "danger": {
+      "bg": "#EF4444",
+      "bg-hover": "#DC2626",
+      "text": "#FFFFFF",
+      "border": "transparent",
+      "radius": "6px",
+      "padding": "12px 24px"
+    }
+  },
+  "card": {
+    "bg": "#FFFFFF",
+    "border": "#E5E7EB",
+    "radius": "12px",
+    "shadow": "0 4px 16px rgba(0,0,0,0.08)",
+    "padding": "24px",
+    "padding-sm": "16px"
+  },
+  "input": {
+    "bg": "#FFFFFF",
+    "bg-focus": "#FFFFFF",
+    "border": "#E5E7EB",
+    "border-focus": "#1A1A2E",
+    "border-error": "#EF4444",
+    "text": "#1A1A2E",
+    "placeholder": "#9CA3AF",
+    "radius": "6px",
+    "padding": "10px 14px",
+    "font-size": "15px"
+  },
+  "header": {
+    "bg": "#FFFFFF",
+    "bg-scrolled": "#FFFFFF",
+    "border-bottom": "#E5E7EB",
+    "height": "72px",
+    "height-mobile": "60px",
+    "shadow-scrolled": "0 1px 8px rgba(0,0,0,0.08)"
+  },
+  "footer": {
+    "bg": "#1A1A2E",
+    "text": "#9CA3AF",
+    "text-heading": "#FFFFFF",
+    "border-top": "#2E2E4E",
+    "padding-y": "48px"
+  },
+  "badge": {
+    "default-bg": "#F1F3F5",
+    "default-text": "#4B5563",
+    "primary-bg": "#EFF6FF",
+    "primary-text": "#1A1A2E",
+    "success-bg": "#ECFDF5",
+    "success-text": "#059669",
+    "radius": "9999px",
+    "padding": "3px 10px",
+    "font-size": "12px",
+    "font-weight": 500
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "$schema": "https://dw-studio.io/schemas/design-tokens/typography.schema.json",
+  "fonts": {
+    "heading": {
+      "family": "Noto Sans KR",
+      "source": "google",
+      "weights": [400, 500, 700, 900],
+      "fallback": "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif"
+    },
+    "body": {
+      "family": "Noto Sans KR",
+      "source": "google",
+      "weights": [300, 400, 500],
+      "fallback": "'Apple SD Gothic Neo', 'Malgun Gothic', sans-serif"
+    },
+    "mono": {
+      "family": "JetBrains Mono",
+      "source": "google",
+      "weights": [400, 700],
+      "fallback": "'Courier New', monospace"
+    }
+  },
+  "scale": {
+    "base": "16px",
+    "h1": "48px",
+    "h2": "36px",
+    "h3": "28px",
+    "h4": "22px",
+    "h5": "18px",
+    "h6": "16px",
+    "sm": "14px",
+    "xs": "12px"
+  },
+  "scale-mobile": {
+    "h1": "32px",
+    "h2": "26px",
+    "h3": "22px",
+    "h4": "18px",
+    "h5": "16px",
+    "h6": "15px"
+  },
+  "line-height": {
+    "heading": "1.2",
+    "body": "1.7",
+    "tight": "1.1",
+    "relaxed": "2.0"
+  },
+  "letter-spacing": {
+    "heading": "-0.02em",
+    "body": "0em",
+    "wide": "0.05em",
+    "korean": "0em"
+  },
+  "font-weight": {
+    "light": 300,
+    "regular": 400,
+    "medium": 500,
+    "bold": 700,
+    "black": 900
+  }
+}

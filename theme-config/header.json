@@ -1,0 +1,41 @@
+{
+  "header": {
+    "type": "sticky",
+    "background": "var(--dw-color-ui-background)",
+    "background_scrolled": "var(--dw-color-ui-background)",
+    "border_bottom": "var(--dw-color-ui-border)",
+    "shadow_scrolled": "0 1px 8px rgba(0,0,0,0.08)",
+    "height": "72px",
+    "height_mobile": "60px",
+    "layout": {
+      "desktop": {
+        "left": "logo",
+        "center": "navigation",
+        "right": "cta-button"
+      },
+      "mobile": {
+        "left": "logo",
+        "right": "hamburger-menu"
+      }
+    },
+    "logo": {
+      "max_height": "48px",
+      "max_height_mobile": "36px"
+    },
+    "navigation": {
+      "font_family": "Noto Sans KR",
+      "font_size": "15px",
+      "font_weight": 500,
+      "color": "var(--dw-color-text-primary)",
+      "color_hover": "var(--dw-color-brand-primary)",
+      "spacing": "24px"
+    },
+    "cta_button": {
+      "text": "Get Started",
+      "background": "var(--dw-color-brand-primary)",
+      "color": "var(--dw-color-text-inverse)",
+      "radius": "6px",
+      "padding": "10px 20px"
+    }
+  }
+}

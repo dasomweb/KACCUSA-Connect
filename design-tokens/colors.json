@@ -1,0 +1,48 @@
+{
+  "$schema": "https://dw-studio.io/schemas/design-tokens/colors.schema.json",
+  "brand": {
+    "primary": "#1A1A2E",
+    "primary-light": "#2E2E4E",
+    "primary-dark": "#0D0D1A",
+    "secondary": "#E94560",
+    "secondary-light": "#FF6B84",
+    "secondary-dark": "#C02040",
+    "accent": "#0F3460",
+    "accent-light": "#1A4D8A",
+    "accent-dark": "#082040"
+  },
+  "ui": {
+    "background": "#FFFFFF",
+    "surface": "#F8F9FA",
+    "surface-alt": "#F1F3F5",
+    "overlay": "#000000",
+    "border": "#E5E7EB",
+    "border-strong": "#CDD1D6",
+    "divider": "#EAECEF"
+  },
+  "text": {
+    "primary": "#1A1A2E",
+    "secondary": "#4B5563",
+    "tertiary": "#9CA3AF",
+    "disabled": "#D1D5DB",
+    "inverse": "#FFFFFF",
+    "link": "#0F3460",
+    "link-hover": "#1A4D8A"
+  },
+  "status": {
+    "success": "#10B981",
+    "success-bg": "#ECFDF5",
+    "warning": "#F59E0B",
+    "warning-bg": "#FFFBEB",
+    "error": "#EF4444",
+    "error-bg": "#FEF2F2",
+    "info": "#3B82F6",
+    "info-bg": "#EFF6FF"
+  },
+  "social": {
+    "kakao": "#FEE500",
+    "naver": "#03C75A",
+    "instagram": "#E1306C",
+    "youtube": "#FF0000"
+  }
+}

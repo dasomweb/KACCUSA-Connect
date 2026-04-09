@@ -1,0 +1,15 @@
+{
+  "page": "community",
+  "template": "page-community",
+  "sections": [
+    { "ref": "sections/hero-section.json", "order": 1 },
+    {
+      "type": "query-loop",
+      "order": 2,
+      "card_ref": "sections/community-card.json",
+      "post_type": "dw_community",
+      "note": "posts_per_page, region filter, and sort order are managed in WP Admin"
+    },
+    { "ref": "sections/cta-section.json", "order": 3 }
+  ]
+}

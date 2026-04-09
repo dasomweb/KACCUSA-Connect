@@ -1,0 +1,61 @@
+{
+  "template_name": "cta-section-v1",
+  "version": "1.0",
+  "description": "Full-width call-to-action section with centered text and button",
+  "blocks": [
+    {
+      "blockName": "kadence/rowlayout",
+      "attrs": {
+        "uniqueID": "dw_cta_001",
+        "columns": 1,
+        "colLayout": "equal",
+        "paddingType": "px",
+        "topPadding": 80,
+        "bottomPadding": 80,
+        "backgroundColor": "var(--dw-color-brand-primary)",
+        "textAlign": "center"
+      },
+      "innerBlocks": [
+        {
+          "blockName": "kadence/column",
+          "innerBlocks": [
+            {
+              "blockName": "kadence/advancedheading",
+              "attrs": {
+                "level": 2,
+                "color": "var(--dw-color-text-inverse)",
+                "fontSize": [36, 28, 24],
+                "fontFamily": "Noto Sans KR",
+                "align": "center"
+              }
+            },
+            {
+              "blockName": "kadence/advancedheading",
+              "attrs": {
+                "level": 3,
+                "htmlTag": "p",
+                "color": "var(--dw-color-text-inverse)",
+                "fontSize": [18, 16, 15],
+                "align": "center"
+              }
+            },
+            {
+              "blockName": "kadence/advancedbtn",
+              "attrs": {
+                "hAlign": "center",
+                "btns": [
+                  {
+                    "text": "Join Now",
+                    "color": "var(--dw-color-brand-primary)",
+                    "background": "#FFFFFF",
+                    "borderRadius": 6
+                  }
+                ]
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

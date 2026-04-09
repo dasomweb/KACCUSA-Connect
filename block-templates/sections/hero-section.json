@@ -1,0 +1,69 @@
+{
+  "template_name": "hero-section-v1",
+  "version": "1.0",
+  "description": "2-column hero section - text left, image right",
+  "blocks": [
+    {
+      "blockName": "kadence/rowlayout",
+      "attrs": {
+        "uniqueID": "dw_hero_001",
+        "columns": 2,
+        "colLayout": "equal",
+        "paddingType": "px",
+        "topPadding": 80,
+        "bottomPadding": 80,
+        "backgroundColor": "var(--dw-color-ui-background)"
+      },
+      "innerBlocks": [
+        {
+          "blockName": "kadence/column",
+          "innerBlocks": [
+            {
+              "blockName": "kadence/advancedheading",
+              "attrs": {
+                "level": 1,
+                "color": "var(--dw-color-text-primary)",
+                "fontSize": [48, 36, 28],
+                "fontFamily": "Noto Sans KR"
+              }
+            },
+            {
+              "blockName": "kadence/advancedheading",
+              "attrs": {
+                "level": 2,
+                "htmlTag": "p",
+                "color": "var(--dw-color-text-secondary)",
+                "fontSize": [18, 16, 15]
+              }
+            },
+            {
+              "blockName": "kadence/advancedbtn",
+              "attrs": {
+                "btns": [
+                  {
+                    "text": "Get Started",
+                    "color": "#ffffff",
+                    "background": "var(--dw-color-brand-primary)",
+                    "borderRadius": 6
+                  }
+                ]
+              }
+            }
+          ]
+        },
+        {
+          "blockName": "kadence/column",
+          "innerBlocks": [
+            {
+              "blockName": "core/image",
+              "attrs": {
+                "sizeSlug": "large",
+                "className": "hero-image"
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
