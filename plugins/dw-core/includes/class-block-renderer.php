@@ -125,10 +125,15 @@ class DW_Block_Renderer {
 			$bg_name = $section['background'] ?? ( $bg_order[ $i ] ?? 'white' );
 			$bg      = $this->resolve_background( $bg_name );
 
+			// Build config from section definition
+			$config = $section['config'] ?? [];
+
 			if ( isset( $section['ref'] ) ) {
-				$markup .= $this->render_section_ref( $section['ref'], $bg );
+				$markup .= $this->render_section_ref( $section['ref'], $bg, $config );
 			} elseif ( isset( $section['type'] ) && 'query-loop' === $section['type'] ) {
 				$markup .= $this->render_query_loop_section( $section, $bg );
+			} elseif ( isset( $section['type'] ) && 'postgrid' === $section['type'] ) {
+				$markup .= $this->render_section_ref( $section['ref'], $bg, $config );
 			}
 		}
 
@@ -142,10 +147,25 @@ class DW_Block_Renderer {
 	 * @param array  $bg   Background config.
 	 * @return string Block markup.
 	 */
-	public function render_section_ref( $ref, $bg = [] ) {
+	public function render_section_ref( $ref, $bg = [], $config = [] ) {
 		$file = $this->templates_path . $ref;
 		$data = $this->load_json( $file );
 
+		if ( empty( $data ) ) {
+			return '';
+		}
+
+		// Direct block type (e.g., kadence/postgrid)
+		if ( ! empty( $data['blockName'] ) ) {
+			return $this->render_direct_block( $data, $config );
+		}
+
+		// Composite section (e.g., category-featured with left + right blocks)
+		if ( ! empty( $data['composite'] ) ) {
+			return $this->render_composite_section( $data, $bg, $config );
+		}
+
+		// Traditional blocks array
 		if ( empty( $data['blocks'] ) ) {
 			return '';
 		}
@@ -154,13 +174,147 @@ class DW_Block_Renderer {
 	}
 
 	/**
+	 * Render a direct block type section (kadence/postgrid etc.).
+	 */
+	public function render_direct_block( $data, $config = [] ) {
+		$block_name = $data['blockName'];
+		$attrs      = $data['attrs'] ?? [];
+
+		// Apply config overrides (category_id, etc.)
+		$attrs = $this->apply_config( $attrs, $config );
+
+		$json = wp_json_encode( $attrs );
+
+		return "<!-- wp:{$block_name} {$json} /-->\n\n";
+	}
+
+	/**
+	 * Render a composite section (left + right postgrid in a row layout).
+	 */
+	public function render_composite_section( $data, $bg = [], $config = [] ) {
+		$section_py = $this->get_section_padding_y();
+		$section_px = $this->get_section_padding_x();
+		$cat_label  = $config['category_label'] ?? 'Posts';
+		$cat_slug   = $config['category_slug'] ?? 'posts';
+
+		// Section header with title + view all
+		$header = $this->render_section_header( $cat_label, $cat_slug );
+
+		// Left block
+		$left_data  = $data['left_block'] ?? [];
+		$left_attrs = $this->apply_config( $left_data['attrs'] ?? [], $config );
+		$left_json  = wp_json_encode( $left_attrs );
+		$left_block = "<!-- wp:{$left_data['blockName']} {$left_json} /-->";
+
+		// Right block
+		$right_data  = $data['right_block'] ?? [];
+		$right_attrs = $this->apply_config( $right_data['attrs'] ?? [], $config );
+		$right_json  = wp_json_encode( $right_attrs );
+		$right_block = "<!-- wp:{$right_data['blockName']} {$right_json} /-->";
+
+		// Wrap in row layout
+		$row_attrs = wp_json_encode([
+			'uniqueID'      => 'dw_cf_wrap_' . $cat_slug,
+			'columns'       => 2,
+			'firstColumnWidth' => 55,
+			'columnGap'     => [24, 20, 16],
+			'topPadding'    => [24, 20, 16],
+			'bottomPadding' => $section_py,
+			'leftPadding'   => $section_px,
+			'rightPadding'  => $section_px,
+			'maxWidth'      => 1200,
+			'align'         => 'full',
+			'bgColor'       => $bg['palette_bg'] ?? 'palette7',
+		]);
+
+		$out  = $header;
+		$out .= "<!-- wp:kadence/rowlayout {$row_attrs} -->\n";
+		$out .= "<div class=\"wp-block-kadence-rowlayout alignfull\">\n";
+		$out .= "<!-- wp:kadence/column -->\n<div class=\"wp-block-kadence-column\">\n";
+		$out .= $left_block . "\n";
+		$out .= "</div>\n<!-- /wp:kadence/column -->\n";
+		$out .= "<!-- wp:kadence/column -->\n<div class=\"wp-block-kadence-column\">\n";
+		$out .= $right_block . "\n";
+		$out .= "</div>\n<!-- /wp:kadence/column -->\n";
+		$out .= "</div>\n<!-- /wp:kadence/rowlayout -->\n\n";
+
+		return $out;
+	}
+
+	/**
+	 * Render a section header bar (CATEGORY + View all >>).
+	 */
+	private function render_section_header( $label, $slug ) {
+		$h_attrs = wp_json_encode([
+			'uniqueID'  => 'dw_sh_' . $slug,
+			'columns'   => 2,
+			'bottomPadding' => [16, 12, 10],
+			'leftPadding'   => [0, 0, 20],
+			'rightPadding'  => [0, 0, 20],
+			'maxWidth'  => 1200,
+			'align'     => 'full',
+		]);
+
+		$out  = "<!-- wp:kadence/rowlayout {$h_attrs} -->\n";
+		$out .= "<div class=\"wp-block-kadence-rowlayout alignfull\">\n";
+
+		// Left: category title
+		$title_json = wp_json_encode([
+			'level' => 2, 'color' => 'palette8',
+			'fontSize' => ['16','15','14'], 'fontWeight' => '700',
+			'letterSpacing' => '0.05em', 'textTransform' => 'uppercase',
+		]);
+		$out .= "<!-- wp:kadence/column -->\n<div class=\"wp-block-kadence-column\">\n";
+		$out .= "<!-- wp:kadence/advancedheading {$title_json} -->\n";
+		$out .= "<h2 class=\"kt-adv-heading\">" . esc_html( $label ) . "</h2>\n";
+		$out .= "<!-- /wp:kadence/advancedheading -->\n";
+		$out .= "</div>\n<!-- /wp:kadence/column -->\n";
+
+		// Right: view all link
+		$link_json = wp_json_encode([
+			'htmlTag' => 'p', 'color' => 'palette3',
+			'fontSize' => ['14','13','13'], 'fontWeight' => '500', 'align' => 'right',
+		]);
+		$out .= "<!-- wp:kadence/column {\"textAlign\":\"right\"} -->\n";
+		$out .= "<div class=\"wp-block-kadence-column has-text-align-right\">\n";
+		$out .= "<!-- wp:kadence/advancedheading {$link_json} -->\n";
+		$out .= "<p class=\"kt-adv-heading has-text-align-right\"><a href=\"/category/{$slug}/\">View all &raquo;</a></p>\n";
+		$out .= "<!-- /wp:kadence/advancedheading -->\n";
+		$out .= "</div>\n<!-- /wp:kadence/column -->\n";
+
+		$out .= "</div>\n<!-- /wp:kadence/rowlayout -->\n";
+
+		// Separator
+		$out .= "<!-- wp:separator {\"style\":{\"color\":{\"background\":\"var(--global-palette6)\"}}} -->\n";
+		$out .= "<hr class=\"wp-block-separator\"/>\n<!-- /wp:separator -->\n\n";
+
+		return $out;
+	}
+
+	/**
+	 * Apply config values to attrs (replace {{placeholders}} and set category IDs).
+	 */
+	private function apply_config( $attrs, $config ) {
+		// Set category IDs
+		if ( ! empty( $config['category_id'] ) && isset( $attrs['categories'] ) ) {
+			$attrs['categories'] = [ (string) $config['category_id'] ];
+		}
+
+		// Replace {{placeholders}} in uniqueID
+		if ( ! empty( $attrs['uniqueID'] ) && ! empty( $config['category_slug'] ) ) {
+			$attrs['uniqueID'] = str_replace( '{{category_slug}}', $config['category_slug'], $attrs['uniqueID'] );
+		}
+
+		return $attrs;
+	}
+
+	/**
 	 * Render a single section JSON (not from file, but from data).
-	 *
-	 * @param array $section_data Full section JSON data.
-	 * @param array $bg           Background config.
-	 * @return string Block markup.
 	 */
 	public function render_section_data( $section_data, $bg = [] ) {
+		if ( ! empty( $section_data['blockName'] ) ) {
+			return $this->render_direct_block( $section_data );
+		}
 		if ( empty( $section_data['blocks'] ) ) {
 			return '';
 		}

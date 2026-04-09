@@ -1,0 +1,108 @@
+{
+  "template_name": "category-grid-v1",
+  "version": "1.0",
+  "description": "Category section with title + View all link + 4-column post card grid",
+  "background": "white",
+  "markup": true,
+  "config": {
+    "category_slug": "{{category}}",
+    "category_label": "{{CATEGORY}}",
+    "posts_per_page": 4,
+    "columns": 4
+  },
+  "blocks": [
+    {
+      "blockName": "kadence/rowlayout",
+      "attrs": {
+        "uniqueID": "dw_cat_grid_{{category}}",
+        "columns": 1,
+        "topPadding": [40, 30, 24],
+        "bottomPadding": [40, 30, 24],
+        "leftPadding": [0, 0, 20],
+        "rightPadding": [0, 0, 20],
+        "maxWidth": 1200,
+        "align": "full",
+        "bgColor": "palette7"
+      },
+      "innerBlocks": [
+        {
+          "blockName": "kadence/column",
+          "innerBlocks": [
+            {
+              "blockName": "kadence/rowlayout",
+              "comment": "Header row: category title + view all",
+              "attrs": {
+                "uniqueID": "dw_cat_header_{{category}}",
+                "columns": 2,
+                "colLayout": "equal",
+                "bottomPadding": [16, 12, 10],
+                "bottomMargin": [16, 12, 10],
+                "borderBottom": "1px solid var(--global-palette6)"
+              },
+              "innerBlocks": [
+                {
+                  "blockName": "kadence/column",
+                  "innerBlocks": [
+                    {
+                      "blockName": "kadence/advancedheading",
+                      "attrs": {
+                        "content": "{{CATEGORY}}",
+                        "level": 2,
+                        "colorPalette": "palette8",
+                        "fontSize": [16, 15, 14],
+                        "fontWeight": "700",
+                        "letterSpacing": "0.05em",
+                        "textTransform": "uppercase"
+                      }
+                    }
+                  ]
+                },
+                {
+                  "blockName": "kadence/column",
+                  "attrs": { "textAlign": "right" },
+                  "innerBlocks": [
+                    {
+                      "blockName": "kadence/advancedheading",
+                      "attrs": {
+                        "content": "<a href='/category/{{category}}/'>View all &raquo;</a>",
+                        "htmlTag": "p",
+                        "colorPalette": "palette3",
+                        "fontSize": [14, 13, 13],
+                        "fontWeight": "500",
+                        "align": "right"
+                      }
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "blockName": "core/query",
+              "attrs": {
+                "queryId": 10,
+                "query": {
+                  "perPage": 4,
+                  "postType": "post",
+                  "taxQuery": { "category": [] }
+                },
+                "displayLayout": { "type": "flex", "columns": 4 }
+              },
+              "innerBlocks": [
+                {
+                  "blockName": "core/post-template",
+                  "innerBlocks": [
+                    { "blockName": "core/post-featured-image", "attrs": { "isLink": true, "aspectRatio": "16/9", "style": { "border": { "radius": "0px" } } } },
+                    { "blockName": "core/post-terms", "attrs": { "term": "category", "style": { "typography": { "fontSize": "11px", "fontWeight": "700", "textTransform": "uppercase" }, "color": { "text": "var(--global-palette3)" } } } },
+                    { "blockName": "core/post-title", "attrs": { "level": 3, "isLink": true, "style": { "typography": { "fontSize": "17px", "fontWeight": "700", "lineHeight": "1.3" } } } },
+                    { "blockName": "core/post-date", "attrs": { "style": { "typography": { "fontSize": "12px" }, "color": { "text": "var(--global-palette4)" } } } },
+                    { "blockName": "core/post-excerpt", "attrs": { "moreText": "", "excerptLength": 20, "style": { "typography": { "fontSize": "14px", "lineHeight": "1.6" }, "color": { "text": "var(--global-palette4)" } } } }
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

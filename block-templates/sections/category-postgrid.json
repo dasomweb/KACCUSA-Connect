@@ -1,0 +1,90 @@
+{
+  "template_name": "category-postgrid-v1",
+  "version": "1.0",
+  "description": "Category section: title bar + 4-column kadence/postgrid with category filter",
+  "background": "white",
+  "configurable": {
+    "category_id": "required - WP category term_id",
+    "category_label": "required - display name",
+    "columns": "optional - default 4",
+    "postsToShow": "optional - default 4",
+    "layout_variant": "optional - grid|list"
+  },
+  "blockName": "kadence/postgrid",
+  "attrs": {
+    "uniqueID": "dw_cat_{{category_slug}}",
+    "postType": "post",
+    "postsToShow": 4,
+    "categories": [],
+    "order": "desc",
+    "orderBy": "date",
+    "layout": "grid",
+    "postColumns": [4, 2, 1],
+    "columnGap": 24,
+    "columnGapTablet": 20,
+    "columnGapMobile": 16,
+    "columnGapUnit": "px",
+    "rowGap": 24,
+    "rowGapTablet": 20,
+    "rowGapMobile": 16,
+    "rowGapUnit": "px",
+    "alignImage": "above",
+    "imageRatio": "2:3",
+    "displayImage": true,
+    "imageBorderRadius": [0, 0, 0, 0],
+    "displayTitle": true,
+    "titleFont": [
+      {
+        "size": ["17px", "16px", "15px"],
+        "lineHeight": [1.3, 1.3, 1.4],
+        "weight": "700",
+        "family": "",
+        "color": "palette8",
+        "colorHover": "palette3"
+      }
+    ],
+    "titlePadding": [8, 0, 0, 0],
+    "displayAboveCategories": true,
+    "displayAboveTaxonomy": true,
+    "aboveTaxType": "category",
+    "aboveColor": "palette3",
+    "aboveLinkColor": "palette3",
+    "aboveLinkHoverColor": "palette1",
+    "aboveFont": [
+      {
+        "size": ["11px", "11px", "10px"],
+        "weight": "700",
+        "textTransform": "uppercase",
+        "letterSpacing": "0.05em",
+        "family": ""
+      }
+    ],
+    "displayDate": true,
+    "metaColor": "palette4",
+    "metaDividerSymbol": "dot",
+    "metaFont": [
+      {
+        "size": ["12px", "12px", "11px"],
+        "family": ""
+      }
+    ],
+    "displayExcerpt": true,
+    "excerptCustomLength": true,
+    "excerptLength": 20,
+    "excerptColor": "palette4",
+    "excerptFont": [
+      {
+        "size": ["14px", "13px", "13px"],
+        "lineHeight": [1.6, 1.6, 1.6],
+        "family": ""
+      }
+    ],
+    "displayReadMore": false,
+    "displayShadow": false,
+    "backgroundColor": "",
+    "borderRadius": [0, 0, 0, 0],
+    "borderWidth": [0, 0, 0, 0],
+    "containerPadding": [0, 0, 0, 0],
+    "bodyPadding": [0, 0, 0, 0]
+  }
+}

@@ -3,14 +3,48 @@
   "template": "page-home",
   "background_preset": "home",
   "sections": [
-    { "ref": "sections/hero-section.json", "order": 1, "background": "white" },
-    { "ref": "sections/feature-grid.json", "order": 2, "background": "light" },
     {
-      "type": "custom",
-      "order": 3,
-      "background": "accent",
-      "note": "Custom content section - managed in WP Admin"
+      "ref": "sections/magazine-hero.json",
+      "order": 1,
+      "background": "white"
     },
-    { "ref": "sections/cta-section.json", "order": 4, "background": "dark" }
+    {
+      "ref": "sections/category-postgrid.json",
+      "type": "postgrid",
+      "order": 2,
+      "background": "white",
+      "config": {
+        "category_id": 4,
+        "category_slug": "business",
+        "category_label": "Business"
+      }
+    },
+    {
+      "ref": "sections/category-postgrid.json",
+      "type": "postgrid",
+      "order": 3,
+      "background": "white",
+      "config": {
+        "category_id": 6,
+        "category_slug": "events",
+        "category_label": "Events"
+      }
+    },
+    {
+      "ref": "sections/category-featured-postgrid.json",
+      "type": "postgrid",
+      "order": 4,
+      "background": "white",
+      "config": {
+        "category_id": 5,
+        "category_slug": "community",
+        "category_label": "Community"
+      }
+    },
+    {
+      "ref": "sections/cta-section.json",
+      "order": 5,
+      "background": "dark"
+    }
   ]
 }
