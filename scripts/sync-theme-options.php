@@ -71,6 +71,10 @@ if ( ! is_dir( $css_dir ) ) {
 }
 file_put_contents( $css_dir . '/design-tokens.css', $css );
 
+// 6. Flush design token CSS cache
+do_action( 'dw_tokens_synced' );
+
 WP_CLI::success( 'Design tokens synced to Kadence theme settings.' );
 WP_CLI::success( 'Palette, typography, and spacing updated.' );
 WP_CLI::success( 'design-tokens.css generated.' );
+WP_CLI::success( 'Token CSS cache flushed.' );

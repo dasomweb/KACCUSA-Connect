@@ -1,0 +1,44 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Design Tokens - Typography",
+  "type": "object",
+  "required": ["fonts", "scale"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "fonts": {
+      "type": "object",
+      "required": ["heading", "body"],
+      "additionalProperties": {
+        "type": "object",
+        "required": ["family", "source", "weights"],
+        "properties": {
+          "family": { "type": "string" },
+          "source": { "type": "string", "enum": ["google", "local", "system"] },
+          "weights": { "type": "array", "items": { "type": "integer" } },
+          "fallback": { "type": "string" }
+        }
+      }
+    },
+    "scale": {
+      "type": "object",
+      "required": ["base", "h1", "h2", "h3"],
+      "additionalProperties": { "type": "string", "pattern": "^\\d+px$" }
+    },
+    "scale-mobile": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^\\d+px$" }
+    },
+    "line-height": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^\\d+\\.?\\d*$" }
+    },
+    "letter-spacing": {
+      "type": "object",
+      "additionalProperties": { "type": "string" }
+    },
+    "font-weight": {
+      "type": "object",
+      "additionalProperties": { "type": "integer" }
+    }
+  }
+}

@@ -1,0 +1,33 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Design Tokens - Colors",
+  "type": "object",
+  "required": ["brand", "ui", "text", "status"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "brand": {
+      "type": "object",
+      "required": ["primary", "secondary", "accent"],
+      "additionalProperties": { "type": "string", "pattern": "^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$" }
+    },
+    "ui": {
+      "type": "object",
+      "required": ["background", "surface", "border"],
+      "additionalProperties": { "type": "string", "pattern": "^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$" }
+    },
+    "text": {
+      "type": "object",
+      "required": ["primary", "secondary"],
+      "additionalProperties": { "type": "string", "pattern": "^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$" }
+    },
+    "status": {
+      "type": "object",
+      "required": ["success", "error"],
+      "additionalProperties": { "type": "string", "pattern": "^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$" }
+    },
+    "social": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^#([0-9A-Fa-f]{3}|[0-9A-Fa-f]{6})$" }
+    }
+  }
+}

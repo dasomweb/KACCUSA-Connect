@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Design Tokens - Spacing",
+  "type": "object",
+  "required": ["tokens", "layout", "breakpoints"],
+  "properties": {
+    "$schema": { "type": "string" },
+    "tokens": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^\\d+px$" }
+    },
+    "layout": {
+      "type": "object",
+      "required": ["content-max-width"],
+      "additionalProperties": { "type": "string" }
+    },
+    "breakpoints": {
+      "type": "object",
+      "additionalProperties": { "type": "string", "pattern": "^\\d+px$" }
+    }
+  }
+}
