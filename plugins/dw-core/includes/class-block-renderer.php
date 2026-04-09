@@ -175,6 +175,7 @@ class DW_Block_Renderer {
 
 	/**
 	 * Render a direct block type section (kadence/postgrid etc.).
+	 * Wraps in a section row with optional header bar.
 	 */
 	public function render_direct_block( $data, $config = [] ) {
 		$block_name = $data['blockName'];
@@ -183,9 +184,55 @@ class DW_Block_Renderer {
 		// Apply config overrides (category_id, etc.)
 		$attrs = $this->apply_config( $attrs, $config );
 
-		$json = wp_json_encode( $attrs );
+		// Fix float precision in JSON
+		$json = $this->json_encode_clean( $attrs );
 
-		return "<!-- wp:{$block_name} {$json} /-->\n\n";
+		$out = '';
+
+		// Add section header if category config is provided
+		if ( ! empty( $config['category_label'] ) && ! empty( $config['category_slug'] ) ) {
+			$out .= $this->render_section_header( $config['category_label'], $config['category_slug'] );
+		}
+
+		// Wrap postgrid in a padded row
+		$section_py = $this->get_section_padding_y();
+		$section_px = $this->get_section_padding_x();
+		$wrap_attrs = $this->json_encode_clean([
+			'uniqueID'      => 'dw_wrap_' . ( $config['category_slug'] ?? wp_rand() ),
+			'columns'       => 1,
+			'topPadding'    => [0, 0, 0],
+			'bottomPadding' => $section_py,
+			'leftPadding'   => $section_px,
+			'rightPadding'  => $section_px,
+			'maxWidth'      => 1200,
+			'align'         => 'full',
+		]);
+
+		$out .= "<!-- wp:kadence/rowlayout {$wrap_attrs} -->\n";
+		$out .= "<div class=\"wp-block-kadence-rowlayout alignfull\">\n";
+		$out .= "<!-- wp:kadence/column -->\n<div class=\"wp-block-kadence-column\">\n";
+		$out .= "<!-- wp:{$block_name} {$json} /-->\n";
+		$out .= "</div>\n<!-- /wp:kadence/column -->\n";
+		$out .= "</div>\n<!-- /wp:kadence/rowlayout -->\n\n";
+
+		return $out;
+	}
+
+	/**
+	 * JSON encode with float precision fix.
+	 * Prevents 1.2 becoming 1.1999999999999999555...
+	 */
+	private function json_encode_clean( $data ) {
+		$json = wp_json_encode( $data );
+		// Fix float precision: replace long decimals with rounded values
+		$json = preg_replace_callback(
+			'/(\d+\.\d{15,})/',
+			function ( $m ) {
+				return round( (float) $m[1], 2 );
+			},
+			$json
+		);
+		return $json;
 	}
 
 	/**
@@ -203,13 +250,13 @@ class DW_Block_Renderer {
 		// Left block
 		$left_data  = $data['left_block'] ?? [];
 		$left_attrs = $this->apply_config( $left_data['attrs'] ?? [], $config );
-		$left_json  = wp_json_encode( $left_attrs );
+		$left_json  = $this->json_encode_clean( $left_attrs );
 		$left_block = "<!-- wp:{$left_data['blockName']} {$left_json} /-->";
 
 		// Right block
 		$right_data  = $data['right_block'] ?? [];
 		$right_attrs = $this->apply_config( $right_data['attrs'] ?? [], $config );
-		$right_json  = wp_json_encode( $right_attrs );
+		$right_json  = $this->json_encode_clean( $right_attrs );
 		$right_block = "<!-- wp:{$right_data['blockName']} {$right_json} /-->";
 
 		// Wrap in row layout
