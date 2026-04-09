@@ -5,8 +5,8 @@ on:
     branches: [develop]
 
 env:
-  WP_PATH: ~/public_html
-  PROJECT_PATH: ~/public_html
+  WP_PATH: ~/www/johnk609.sg-host.com/public_html
+  PROJECT_PATH: ~/kaccusa-connect
 
 jobs:
   deploy-staging:
@@ -30,7 +30,7 @@ jobs:
           host: ${{ secrets.STAGING_HOST }}
           username: ${{ secrets.STAGING_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          port: ${{ secrets.SSH_PORT || 18765 }}
+          port: 18765
           script: |
             set -e
 

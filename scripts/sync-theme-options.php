@@ -56,6 +56,9 @@ update_option( 'kadence_theme_settings', $kadence );
 // 5. Generate CSS variables file
 $css = ":root {\n";
 foreach ( $colors as $group => $values ) {
+	if ( ! is_array( $values ) ) {
+		continue;
+	}
 	foreach ( $values as $key => $val ) {
 		$css .= "  --dw-color-{$group}-{$key}: {$val};\n";
 	}
