@@ -1,15 +1,17 @@
 {
   "page": "portfolio",
   "template": "page-portfolio",
+  "background_preset": "portfolio",
   "sections": [
-    { "ref": "sections/hero-section.json", "order": 1 },
+    { "ref": "sections/hero-section.json", "order": 1, "background": "white" },
     {
       "type": "query-loop",
       "order": 2,
+      "background": "light",
       "card_ref": "sections/portfolio-card.json",
       "post_type": "dw_portfolio",
       "note": "posts_per_page, category filter, and sort order are managed in WP Admin"
     },
-    { "ref": "sections/cta-section.json", "order": 3 }
+    { "ref": "sections/cta-section.json", "order": 3, "background": "dark" }
   ]
 }

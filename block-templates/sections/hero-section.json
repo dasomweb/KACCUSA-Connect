@@ -1,7 +1,8 @@
 {
   "template_name": "hero-section-v1",
-  "version": "1.0",
+  "version": "1.1",
   "description": "2-column hero section - text left, image right",
+  "background": "white",
   "blocks": [
     {
       "blockName": "kadence/rowlayout",
@@ -9,22 +10,41 @@
         "uniqueID": "dw_hero_001",
         "columns": 2,
         "colLayout": "equal",
-        "paddingType": "px",
-        "topPadding": 80,
-        "bottomPadding": 80,
-        "backgroundColor": "var(--dw-color-ui-background)"
+
+        "topPadding": [80, 60, 40],
+        "bottomPadding": [80, 60, 40],
+        "topPaddingType": "px",
+        "bottomPaddingType": "px",
+
+        "leftPadding": [0, 0, 20],
+        "rightPadding": [0, 0, 20],
+        "leftPaddingType": "px",
+        "rightPaddingType": "px",
+
+        "backgroundColor": "#FFFFFF",
+        "borderRadius": 0,
+        "columnGap": [24, 20, 16]
       },
       "innerBlocks": [
         {
           "blockName": "kadence/column",
+          "attrs": {
+            "topPadding": [0, 0, 0],
+            "bottomPadding": [0, 0, 0],
+            "leftPadding": [0, 0, 0],
+            "rightPadding": [0, 0, 0]
+          },
           "innerBlocks": [
             {
               "blockName": "kadence/advancedheading",
               "attrs": {
                 "level": 1,
-                "color": "var(--dw-color-text-primary)",
+                "color": "#1A1A2E",
                 "fontSize": [48, 36, 28],
-                "fontFamily": "Noto Sans KR"
+                "lineHeight": [1.2, 1.2, 1.2],
+                "fontFamily": "Noto Sans KR",
+                "fontWeight": "900",
+                "marginBottom": [24, 20, 16]
               }
             },
             {
@@ -32,8 +52,10 @@
               "attrs": {
                 "level": 2,
                 "htmlTag": "p",
-                "color": "var(--dw-color-text-secondary)",
-                "fontSize": [18, 16, 15]
+                "color": "#4B5563",
+                "fontSize": [18, 16, 15],
+                "lineHeight": [1.7, 1.7, 1.7],
+                "marginBottom": [32, 24, 20]
               }
             },
             {
@@ -42,9 +64,12 @@
                 "btns": [
                   {
                     "text": "Get Started",
-                    "color": "#ffffff",
-                    "background": "var(--dw-color-brand-primary)",
-                    "borderRadius": 6
+                    "color": "#FFFFFF",
+                    "background": "#1A1A2E",
+                    "borderRadius": 6,
+                    "paddingLR": 24,
+                    "paddingBT": 12,
+                    "fontSize": [15, 15, 14]
                   }
                 ]
               }
@@ -58,7 +83,8 @@
               "blockName": "core/image",
               "attrs": {
                 "sizeSlug": "large",
-                "className": "hero-image"
+                "className": "hero-image",
+                "borderRadius": 8
               }
             }
           ]

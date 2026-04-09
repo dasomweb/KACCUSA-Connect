@@ -51,6 +51,37 @@ Theme: Kadence Pro | Hosting: SiteGround | CI/CD: GitHub Actions + WP-CLI
 - Sort order preferences
 - Individual page text/images content
 
+## Section Style Rules
+
+### Responsive Values (Required)
+All padding, margin, fontSize, gap MUST use [desktop, tablet, mobile] 3-value arrays.
+
+Reference:
+- desktop  -> design-tokens/spacing.json section.padding-y.desktop
+- tablet   -> desktop x 0.75 (round down)
+- mobile   -> desktop x 0.5  (round down)
+
+Example:
+"topPadding": [80, 60, 40]   -> CORRECT
+"topPadding": 80              -> FORBIDDEN (single value)
+
+### Radius
+- Reference design-tokens/spacing.json radius tokens
+- Use numbers only without px (Kadence convention)
+Example: "borderRadius": 12  -> CORRECT / "borderRadius": "12px"  -> FORBIDDEN
+
+### Backgrounds
+- Reference design-tokens/backgrounds.json patterns
+- When background is dark/image-dark, ALL inner text must use textColor: "#FFFFFF"
+- Page background order follows backgrounds.json page-presets
+
+### New Section Checklist
+1. topPadding / bottomPadding -> [desktop, tablet, mobile] array
+2. leftPadding / rightPadding -> [0, 0, 20] (mobile horizontal padding required)
+3. borderRadius -> spacing.json radius token reference
+4. backgroundColor -> backgrounds.json patterns reference
+5. If dark background, change ALL inner text color to #FFFFFF
+
 ## Hosting: SiteGround
 - WP-CLI available via SSH
 - Deploy via GitHub Actions + SSH

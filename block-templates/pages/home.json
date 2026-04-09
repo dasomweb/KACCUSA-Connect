@@ -1,9 +1,16 @@
 {
   "page": "home",
   "template": "page-home",
+  "background_preset": "home",
   "sections": [
-    { "ref": "sections/hero-section.json", "order": 1 },
-    { "ref": "sections/feature-grid.json", "order": 2 },
-    { "ref": "sections/cta-section.json", "order": 3 }
+    { "ref": "sections/hero-section.json", "order": 1, "background": "white" },
+    { "ref": "sections/feature-grid.json", "order": 2, "background": "light" },
+    {
+      "type": "custom",
+      "order": 3,
+      "background": "accent",
+      "note": "Custom content section - managed in WP Admin"
+    },
+    { "ref": "sections/cta-section.json", "order": 4, "background": "dark" }
   ]
 }

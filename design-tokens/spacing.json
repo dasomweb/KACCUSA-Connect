@@ -20,12 +20,40 @@
     "content-max-width": "1200px",
     "narrow-width": "768px",
     "wide-width": "1400px",
-    "full-width": "100%",
-    "section-padding-y": "80px",
     "section-padding-x": "24px",
     "container-padding": "20px",
     "grid-gap": "24px",
     "grid-gap-sm": "16px"
+  },
+  "section": {
+    "padding-y": {
+      "desktop": 80,
+      "tablet": 60,
+      "mobile": 40
+    },
+    "padding-x": {
+      "desktop": 0,
+      "tablet": 0,
+      "mobile": 20
+    },
+    "gap-between": {
+      "desktop": 24,
+      "tablet": 20,
+      "mobile": 16
+    },
+    "inner-gap": {
+      "desktop": 48,
+      "tablet": 36,
+      "mobile": 24
+    }
+  },
+  "radius": {
+    "section-bg": 16,
+    "card": 12,
+    "button": 6,
+    "image": 8,
+    "badge": 999,
+    "input": 6
   },
   "breakpoints": {
     "xs": "375px",

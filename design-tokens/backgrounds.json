@@ -1,0 +1,58 @@
+{
+  "$schema": "https://dw-studio.io/schemas/design-tokens/backgrounds.schema.json",
+  "patterns": {
+    "white": {
+      "type": "color",
+      "color": "#FFFFFF",
+      "textColor": "#1A1A2E",
+      "overlay": "none"
+    },
+    "light": {
+      "type": "color",
+      "color": "#F8F9FA",
+      "textColor": "#1A1A2E",
+      "overlay": "none"
+    },
+    "dark": {
+      "type": "color",
+      "color": "#1A1A2E",
+      "textColor": "#FFFFFF",
+      "overlay": "none"
+    },
+    "accent": {
+      "type": "color",
+      "color": "#EFF6FF",
+      "textColor": "#1A1A2E",
+      "overlay": "none"
+    },
+    "brand": {
+      "type": "color",
+      "color": "#E94560",
+      "textColor": "#FFFFFF",
+      "overlay": "none"
+    },
+    "image-dark": {
+      "type": "image",
+      "color": "transparent",
+      "textColor": "#FFFFFF",
+      "overlay": "rgba(0, 0, 0, 0.5)"
+    },
+    "image-light": {
+      "type": "image",
+      "color": "transparent",
+      "textColor": "#1A1A2E",
+      "overlay": "rgba(255, 255, 255, 0.7)"
+    }
+  },
+  "alternating": {
+    "default": ["white", "light", "white", "light"],
+    "with-dark": ["white", "light", "dark", "light"],
+    "with-accent": ["white", "accent", "white", "accent"]
+  },
+  "page-presets": {
+    "home": ["white", "light", "accent", "dark", "white"],
+    "portfolio": ["white", "light", "white", "dark"],
+    "community": ["white", "accent", "white", "dark"],
+    "about": ["image-dark", "white", "light", "dark"]
+  }
+}

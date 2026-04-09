@@ -2,12 +2,13 @@
   "$schema": "https://dw-studio.io/schemas/design-tokens/index.schema.json",
   "version": "1.0.0",
   "project": "KACCUSA-Connect WordPress",
-  "updated": "2026-04-08",
+  "updated": "2026-04-09",
   "imports": [
     "colors.json",
     "typography.json",
     "spacing.json",
     "borders.json",
-    "components.json"
+    "components.json",
+    "backgrounds.json"
   ]
 }

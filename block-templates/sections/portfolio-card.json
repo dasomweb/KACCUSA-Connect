@@ -1,44 +1,48 @@
 {
   "template_name": "portfolio-card-v1",
-  "version": "1.0",
+  "version": "1.1",
   "description": "Query Loop card design for portfolio items - references component tokens",
   "card_design": {
     "wrapper": {
-      "background": "var(--dw-color-ui-background)",
-      "border": "var(--dw-color-ui-border)",
-      "borderRadius": "12px",
-      "shadow": "0 4px 16px rgba(0,0,0,0.08)",
+      "background": "#FFFFFF",
+      "border": "#E5E7EB",
+      "borderRadius": 12,
+      "shadow": [{"color": "rgba(0,0,0,0.08)", "blur": 16, "spread": 0, "inset": false}],
       "overflow": "hidden"
     },
     "thumbnail": {
       "aspectRatio": "16/9",
-      "objectFit": "cover"
+      "objectFit": "cover",
+      "borderRadius": 0
     },
     "content": {
-      "padding": "24px"
+      "topPadding": [24, 20, 16],
+      "bottomPadding": [24, 20, 16],
+      "leftPadding": [24, 20, 16],
+      "rightPadding": [24, 20, 16]
     },
     "title": {
       "tag": "h3",
-      "color": "var(--dw-color-text-primary)",
-      "fontSize": "20px",
+      "color": "#1A1A2E",
+      "fontSize": [20, 18, 16],
       "fontWeight": 700,
-      "marginBottom": "8px"
+      "marginBottom": [8, 8, 6]
     },
     "meta": {
       "field": "_dw_client",
-      "color": "var(--dw-color-text-secondary)",
-      "fontSize": "14px",
-      "marginBottom": "16px"
+      "color": "#4B5563",
+      "fontSize": [14, 14, 13],
+      "marginBottom": [16, 12, 10]
     },
     "link_button": {
       "text": "View Project",
-      "color": "var(--dw-color-brand-accent)",
-      "fontSize": "14px",
+      "color": "#0F3460",
+      "fontSize": [14, 14, 13],
       "fontWeight": 500
     }
   },
   "hover": {
-    "shadow": "0 10px 15px rgba(0,0,0,0.1), 0 4px 6px rgba(0,0,0,0.05)",
+    "shadow": [{"color": "rgba(0,0,0,0.1)", "blur": 15, "spread": 0, "inset": false}],
     "transform": "translateY(-2px)",
     "transition": "all 0.2s ease"
   }
